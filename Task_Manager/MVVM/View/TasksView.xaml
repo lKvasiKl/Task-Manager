@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="Task_Manager.MVVM.View.TasksView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Task_Manager.MVVM.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" 
+             d:DesignWidth="1200">
+    <Grid>
+        <Border
+            Background="#d2a4e9"
+            CornerRadius="10 0 0 0">
+            <TextBlock
+                Text="⌂  Tasks" 
+                FontSize="25"
+                FontWeight="Bold"
+                TextElement.Foreground="{DynamicResource MaterialDesignBackground}"
+                Margin="40 20 0 0"
+                >
+            </TextBlock>
+        </Border>
+
+        <Grid
+            Visibility="Visible">
+            <Image
+                Height="100"
+                Width="100"
+                Source="/MVVM/View/Tasks.png"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Margin="0 0 0 210"
+                >
+            </Image>
+
+            <TextBlock
+                Text="Tasks that are not included&#x0a;in any of the lists you created&#x0a;are displayed here."
+                TextAlignment="Center"
+                FontSize="20"
+                TextElement.Foreground="{DynamicResource MaterialDesignBackground}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0 0 0 55"
+                >
+            </TextBlock>
+        </Grid>
+
+    </Grid>
+</UserControl>
