@@ -18,6 +18,11 @@
                 TextElement.Foreground="{DynamicResource MaterialDesignBackground}"
                 Margin="40 20 0 0"
                 >
+                <TextBlock.Effect>
+                    <DropShadowEffect
+                        ShadowDepth="1">
+                    </DropShadowEffect>
+                </TextBlock.Effect>
             </TextBlock>
         </Border>
 

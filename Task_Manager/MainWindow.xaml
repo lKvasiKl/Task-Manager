@@ -107,7 +107,7 @@
                         >
                     </Image>
                 </Grid>
-
+                
                 <Grid Grid.Column="0" Grid.Row="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="110*"/>
@@ -136,7 +136,7 @@
                             Style="{StaticResource RadioButtonTheme}" 
                             Command="{Binding TasksCommand}"
                             >
-
+                            
                         </RadioButton>
 
                         <RadioButton
@@ -209,9 +209,9 @@
                 <Grid Grid.Column="1" Grid.Row="1">
                     <ContentControl
                         Content="{Binding CurrentView}">
-
+                        
                     </ContentControl>
-
+                    
                     <StackPanel>
                         <materialDesign:PopupBox 
                             Foreground="{DynamicResource MaterialDesignCardBackground}"
@@ -227,22 +227,24 @@
                                 Margin="2 0 2 3"
                                 >
                                 <ListBoxItem>
-                                    <StackPanel>
-                                        <StackPanel
-                                            Orientation="Horizontal"
+                        <StackPanel>
+                            <StackPanel
+                                Margin="16 10 0 6"
+                                Orientation="Horizontal"
                                             VerticalAlignment="Top"
-                                            HorizontalAlignment="Center">
-                                            <TextBlock 
+                                HorizontalAlignment="Center">
+                            <TextBlock 
                                             Width="115"
                                             Height="15"
-                                            VerticalAlignment="Center"
+                                VerticalAlignment="Center"    
                                             TextAlignment="Center"
                                             Text="Light ☼"/>
-                                            <ToggleButton 
-                                            Cursor="Hand"
-                                            ToolTip="Enable Dark Mode"
-                                            x:Name="themeToggle"
-                                            Click="Toggle_Theme"/>
+                            <ToggleButton 
+                                Cursor="Hand"
+                                ToolTip="Enable Dark Mode"
+                                Margin="12 0 8 0"
+                                x:Name="themeToggle"
+                                Click="Toggle_Theme"/>
                                             <TextBlock 
                                             Width="115"
                                             Height="15"
@@ -250,11 +252,12 @@
                                             TextAlignment="Center"
                                             Text="Dark ☽"/>
                                         </StackPanel>
-                                    </StackPanel>
+                            </StackPanel>
                                 </ListBoxItem>
                             </ListBox>
                         </materialDesign:PopupBox>
 
+                        </StackPanel>
                     </StackPanel>
                 </Grid>
             </Grid>
