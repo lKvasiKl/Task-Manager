@@ -230,18 +230,18 @@
                                             Orientation="Horizontal"
                                             VerticalAlignment="Top"
                                             HorizontalAlignment="Center">
-                                            <TextBlock 
+                                        <TextBlock 
                                             Width="115"
                                             Height="15"
                                             VerticalAlignment="Center"    
                                             TextAlignment="Center"
                                             Text="Light ☼"/>
-                                            <ToggleButton 
+                                        <ToggleButton 
                                             Cursor="Hand"
                                             ToolTip="Enable Dark Mode"
                                             x:Name="themeToggle"
                                             Click="Toggle_Theme"/>
-                                            <TextBlock 
+                                        <TextBlock 
                                             Width="115"
                                             Height="15"
                                             VerticalAlignment="Center"
