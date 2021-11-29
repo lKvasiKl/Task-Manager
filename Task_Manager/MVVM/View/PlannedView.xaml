@@ -24,27 +24,32 @@
         </Border>
 
         <Grid
-            Visibility="Visible">
-            <Image
-                Height="95"
-                Width="95"
-                Source="/MVVM/View/Planned.png"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Center"
-                Margin="0 0 0 210"
-                >
-            </Image>
+            Margin="50 70 50 50">
 
-            <TextBlock
-                Text="Tasks with due date or&#x0a;reminder are displayed here."
-                TextAlignment="Center"
-                FontSize="20"
-                TextElement.Foreground="{DynamicResource MaterialDesignBackground}"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="0 0 0 55"
-                >
-            </TextBlock>
+            <Grid
+                Visibility="Visible">
+                <Image
+                    Height="95"
+                    Width="95"
+                    Source="/MVVM/View/Planned.png"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Margin="0 0 0 210"
+                    >
+                </Image>
+
+                <TextBlock
+                    Text="Tasks with due date or&#x0a;reminder are displayed here."
+                    TextAlignment="Center"
+                    FontSize="20"
+                    TextElement.Foreground="{DynamicResource MaterialDesignBackground}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="0 0 0 55"
+                    >
+                </TextBlock>
+            </Grid>
+            
         </Grid>
     </Grid>
 </UserControl>

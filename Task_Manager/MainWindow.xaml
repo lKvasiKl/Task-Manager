@@ -111,7 +111,6 @@
                 <Grid Grid.Column="0" Grid.Row="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="110*"/>
-                        <RowDefinition Height="113*"/>
                         <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
 
@@ -120,16 +119,16 @@
 
                         <TextBox
                             Height="35"
-                            VerticalAlignment="Bottom"
+                            VerticalAlignment="Top"
                             FontSize="17"
-                            Margin="10 0 10 175"
+                            Margin="10 140 10 0"
                             Style="{StaticResource TextBoxStyle}"
                             >
                         </TextBox>
 
-                        <RadioButton
-                            Margin="10 0 10 10"
-                            VerticalAlignment="Bottom"
+                        <RadioButton x:Name="tasks"
+                            Margin="10 300 10 0"
+                            VerticalAlignment="Top"
                             FontSize="20"
                             Content="⌂  Tasks"
                             Height="38"
@@ -139,9 +138,9 @@
                             
                         </RadioButton>
 
-                        <RadioButton
-                            Margin="10 0 10 50"
-                            VerticalAlignment="Bottom"
+                        <RadioButton x:Name="planned"
+                            Margin="10 260 10 0"
+                            VerticalAlignment="Top"
                             FontSize="20"
                             Content="🗸  Planned"
                             Height="38"
@@ -150,9 +149,9 @@
                             >
                         </RadioButton>
 
-                        <RadioButton
-                            Margin="10 0 10 90"
-                            VerticalAlignment="Bottom"
+                        <RadioButton x:Name="important"
+                            Margin="10 220 10 0"
+                            VerticalAlignment="Top"
                             FontSize="20"
                             Content="☆  Important"
                             Height="38"
@@ -161,10 +160,10 @@
                             >
                         </RadioButton>
 
-                        <RadioButton
+                        <RadioButton x:Name="myDay"
                             IsChecked="True"
-                            Margin="10 0 10 130"
-                            VerticalAlignment="Bottom"
+                            Margin="10 180 10 10"
+                            VerticalAlignment="Top"
                             FontSize="20"
                             Content="☼  My day"
                             Height="38"
@@ -178,21 +177,44 @@
                             Y1="325"
                             X2="275"
                             Y2="325"
-                            VerticalAlignment="Bottom"
-                            Margin="10 0 10 0"
+                            VerticalAlignment="Top"
+                            Margin="10 20 10 0"
                             StrokeThickness="2"
                             Stroke="{DynamicResource MaterialDesignDivider}"
                             >
                         </Line>
+
+
+                        <ListBox 
+                            Name="userTasksList"
+                            Margin="10 352 10 0"
+                            ItemsSource="{Binding TasksLists}"
+                            SelectedItem="{Binding SelectedTasksList, Mode=TwoWay}"
+                            ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                            >
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock 
+                                        Text="{Binding Name}"
+                                        
+                                        >
+
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </Grid>
+
+                    
+                    
 
                     <Grid Grid.Column="0" Grid.Row="2">
                         <Button
                             Cursor="Hand"
-                            Style="{StaticResource ButtonTheme}">
+                            Style="{StaticResource ButtonTheme}"
+                            Command="{Binding AddTaskListCommand}">
                         </Button>
                     </Grid>
-                    
                 </Grid>
 
 

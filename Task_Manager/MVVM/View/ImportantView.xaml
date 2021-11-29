@@ -22,6 +22,9 @@
         </Border>
 
         <Grid
+            Margin="50 70 50 50">
+            
+            <Grid
             Visibility="Visible">
             <Image
                 Height="95"
@@ -43,6 +46,8 @@
                 Margin="0 0 0 60"
                 >
             </TextBlock>
+            </Grid>
+            
         </Grid>
 
     </Grid>

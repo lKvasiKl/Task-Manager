@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Task_Manager.MVVM.ViewModel
 {
-    internal class TasksViewModel
+    public class TasksViewModel
     {
     }
 }

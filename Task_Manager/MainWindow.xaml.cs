@@ -38,10 +38,30 @@ namespace Task_Manager
                 theme.SetBaseTheme(Theme.Dark);
             }
 
+            userTasksList.SelectionChanged += UserTasksList_SelectionChanged;
+            myDay.Checked += Checked;
+            planned.Checked += Checked;
+            important.Checked += Checked;
+            tasks.Checked += Checked;
+
             //Сохраняет актуальный GreedSplitter
             _paletteHelper.SetTheme(theme);
             GridLength gridLength = new GridLength(Settings.Default.GridSplitter);
             Spliter.Width = gridLength;
+        }
+
+        private void Checked(object sender, RoutedEventArgs e)
+        {
+            userTasksList.UnselectAll();
+            (sender as RadioButton).IsChecked = true;
+        }
+
+        private void UserTasksList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            myDay.IsChecked = false;
+            planned.IsChecked = false;
+            important.IsChecked = false;
+            tasks.IsChecked = false;
         }
 
         private void Close_Button(object sender, RoutedEventArgs e)
@@ -93,6 +113,8 @@ namespace Task_Manager
 
             _paletteHelper.SetTheme(theme);
         }
+
+        
 
     }
 }

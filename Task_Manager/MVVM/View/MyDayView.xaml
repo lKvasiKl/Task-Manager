@@ -19,32 +19,34 @@
                 Margin="40 20 0 0"
                 >
             </TextBlock>
-
-
         </Border>
 
         <Grid
-            Visibility="Visible">
-            <Image
-                Height="120"
-                Width="120"
-                Source="/MVVM/View/MyDay.png"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Center"
-                Margin="0 0 0 210"
-                >
-            </Image>
+            Margin="50 70 50 50">
 
-            <TextBlock
-                Text="My day - a list&#x0a;that is updated every day."
-                TextAlignment="Center"
-                FontSize="20"
-                TextElement.Foreground="{DynamicResource MaterialDesignBackground}"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="0 0 0 70"
-                >
-            </TextBlock>
+            <Grid
+                Visibility="Visible">
+                <Image
+                   Height="120"
+                   Width="120"
+                   Source="/MVVM/View/MyDay.png"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   Margin="0 0 0 210"
+                        >
+                </Image>
+
+                <TextBlock
+                   Text="My day - a list&#x0a;that is updated every day."
+                   TextAlignment="Center"
+                   FontSize="20"
+                   TextElement.Foreground="{DynamicResource MaterialDesignBackground}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Margin="0 0 0 70"
+                   >
+                </TextBlock>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

@@ -22,28 +22,32 @@
         </Border>
 
         <Grid
-            Visibility="Visible">
-            <Image
-                Height="100"
-                Width="100"
-                Source="/MVVM/View/Tasks.png"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Center"
-                Margin="0 0 0 210"
-                >
-            </Image>
+            Margin="50 70 50 50">
 
-            <TextBlock
-                Text="Tasks that are not included&#x0a;in any of the lists you created&#x0a;are displayed here."
-                TextAlignment="Center"
-                FontSize="20"
-                TextElement.Foreground="{DynamicResource MaterialDesignBackground}"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="0 0 0 55"
-                >
-            </TextBlock>
+            <Grid
+                Visibility="Visible">
+                <Image
+                    Height="100"
+                    Width="100"
+                    Source="/MVVM/View/Tasks.png"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Margin="0 0 0 210"
+                    >
+                </Image>
+
+                <TextBlock
+                    Text="Tasks that are not included&#x0a;in any of the lists you created&#x0a;are displayed here."
+                    TextAlignment="Center"
+                    FontSize="20"
+                    TextElement.Foreground="{DynamicResource MaterialDesignBackground}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="0 0 0 55"
+                    >
+                </TextBlock>
+            </Grid>
+
         </Grid>
-
     </Grid>
 </UserControl>

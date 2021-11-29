@@ -29,6 +29,9 @@
             <DataTemplate DataType="{x:Type viewModel:TasksViewModel}">
                 <view:TasksView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:TasksListViewModel}">
+                <view:TasksListView/>
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
