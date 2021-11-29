@@ -252,7 +252,7 @@
                                             TextAlignment="Center"
                                             Text="Dark ☽"/>
                                         </StackPanel>
-                                    </StackPanel>
+                            </StackPanel>
                                 </ListBoxItem>
                             </ListBox>
                         </materialDesign:PopupBox>
