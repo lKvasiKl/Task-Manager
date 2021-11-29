@@ -25,7 +25,7 @@
             Margin="50 70 50 50">
 
             <Grid
-                Visibility="Visible">
+                Visibility="{Binding NeedShowPicture, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Image
                    Height="120"
                    Width="120"
@@ -47,6 +47,17 @@
                    >
                 </TextBlock>
             </Grid>
+        </Grid>
+
+        <Grid
+            Margin="50 70 50 70">
+
+            <ListBox 
+                ItemsSource="{Binding Tasks}"
+                ItemContainerStyle="{StaticResource ListBoxItemStyle}"
+                >
+
+            </ListBox>
         </Grid>
     </Grid>
 </UserControl>

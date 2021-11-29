@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Controls;
 using Task_Manager.Core;
 
 namespace Task_Manager.MVVM.ViewModel
@@ -22,6 +24,10 @@ namespace Task_Manager.MVVM.ViewModel
 
         public RelayCommand AddTaskListCommand { get; set; }
 
+        public RelayCommand RemoveTaskListCommand { get; set; }
+
+        public RelayCommand AddTaskToListCommand { get; set; }
+
         public MyDayViewModel MyDayVM { get; set; }
 
         public ImportantViewModel ImportantVM { get; set; }
@@ -29,6 +35,8 @@ namespace Task_Manager.MVVM.ViewModel
         public PlannedViewModel PlannedVM { get; set; }
 
         public TasksViewModel TasksVM { get; set; }
+
+        public AddTaskButtonViewModel AddTaskButtonVM { get; set; }
 
         public TasksListViewModel SelectedTasksList
         {
@@ -58,9 +66,10 @@ namespace Task_Manager.MVVM.ViewModel
 
         public MainVeiwModel()
         {
+            AddTaskButtonVM = new AddTaskButtonViewModel();
             TasksLists = new ObservableCollection<TasksListViewModel>();
-            TasksLists.Add(new TasksListViewModel());
-            TasksLists.Add(new TasksListViewModel());
+            TasksLists.Add(new TasksListViewModel(false));
+            TasksLists.Add(new TasksListViewModel(false));
             TasksLists[0].Name = "Products";
             TasksLists[1].Name = "Homework";
             MyDayVM = new MyDayViewModel();
@@ -96,7 +105,39 @@ namespace Task_Manager.MVVM.ViewModel
 
             AddTaskListCommand = new RelayCommand(o =>
             {
-                TasksLists.Add(new TasksListViewModel());
+                TasksListViewModel tasksList = new(true);
+                TasksLists.Add(tasksList);
+                SelectedTasksList = tasksList;
+            });
+
+            RemoveTaskListCommand = new RelayCommand(o =>
+            {
+                if (SelectedTasksList != null)
+                {
+                    if (MessageBox.Show("Are you sure you want to delete your to-do list?", "Remove to-do list", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                    {
+                        TasksLists.Remove(SelectedTasksList);
+                        if (TasksLists.Count > 0)
+                        {
+                            SelectedTasksList = TasksLists[^1];
+                        }
+                    }
+                    
+                }
+                else
+                {
+                    MessageBox.Show("Select the to-do list you want to delete.", "Remove to-do list");
+                }
+            });
+
+            AddTaskToListCommand = new RelayCommand(o =>
+            {
+                if (AddTaskButtonVM.TaskVM.Description != string.Empty)
+                {
+                    (CurrentView as TasksListBaseViewModel).AddTask(AddTaskButtonVM.TaskVM);
+                    AddTaskButtonVM.TaskVM = new TaskViewModel();
+                }
+                
             });
         }
     }

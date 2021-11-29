@@ -68,11 +68,11 @@
                 </Setter>
 
                 <Setter 
-                Property="ContentStringFormat"
-                Value="|"/>
+                    Property="ContentStringFormat"
+                    Value="|"/>
                 <Setter
-                Property="BorderBrush"
-                Value="#52dce1"/>
+                    Property="BorderBrush"
+                    Value="#52dce1"/>
             </Trigger>
 
             <EventTrigger RoutedEvent="Click">
@@ -116,7 +116,6 @@
         </Style.Triggers>
     </Style>
 
-
     <Style BasedOn="{StaticResource {x:Type Button}}"
            TargetType="{x:Type Button}"
            x:Key="ButtonTheme">
@@ -137,7 +136,7 @@
                                 <Grid>
 
                                     <TextBlock
-                                        Text="＋  Create list"
+                                        Text="{TemplateBinding Property=Content}"
                                         FontSize="18"
                                         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
                                         HorizontalAlignment="Stretch"
@@ -179,4 +178,72 @@
         </Style.Triggers>
     </Style>
 
+
+    <Style BasedOn="{StaticResource {x:Type Button}}"
+           TargetType="{x:Type Button}"
+           x:Key="AddTaskButton">
+
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch"
+                                Background="{TemplateBinding Background}"
+                                Opacity="0.6"
+                                Margin="10 0 10 0"
+                                CornerRadius="3"
+                                Grid.Column="0"
+                                >
+                            </Border>
+
+                            <Grid >
+                                <TextBlock
+                                        Text="{TemplateBinding Property=Content}"
+                                        FontSize="20"
+                                        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        Margin="18 0 0 5"
+                                        >
+                                </TextBlock>
+                            </Grid>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Setter 
+                Property="Background"
+                Value="{DynamicResource MaterialDesignBackground}"
+                />
+            <Setter 
+                Property="BorderThickness"
+                Value="0"/>
+
+        </Style.Setters>
+
+        <Style.Triggers>
+            <Trigger
+                Property="IsMouseOver"
+                Value="True"
+                >
+                <Setter
+                    Property="Cursor"
+                    Value="IBeam"
+                    >
+                </Setter>
+                <Setter
+                    Property="Background"
+                    Value="{DynamicResource MaterialDesignSelection}"
+                    >
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>
+    
+    

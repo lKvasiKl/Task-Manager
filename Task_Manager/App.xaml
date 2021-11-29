@@ -2,8 +2,6 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Task_Manager"
-             xmlns:viewModel="clr-namespace:Task_Manager.MVVM.ViewModel"
-             xmlns:view="clr-namespace:Task_Manager.MVVM.View"
              StartupUri="MainWindow.xaml">
      <Application.Resources>
         <ResourceDictionary>
@@ -15,23 +13,12 @@
 
                 <ResourceDictionary Source="Theme/ButtonStyle.xaml"/>
                 <ResourceDictionary Source="Theme/TextBoxStyle.xaml"/>
+                <ResourceDictionary Source="Theme/ListBoxItemStyle.xaml"/>
+                <ResourceDictionary Source="Theme/DataTemplate.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <DataTemplate DataType="{x:Type viewModel:MyDayViewModel}">
-                <view:MyDayView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type viewModel:ImportantViewModel}">
-                <view:ImportantView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type viewModel:PlannedViewModel}">
-                <view:PlannedView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type viewModel:TasksViewModel}">
-                <view:TasksView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type viewModel:TasksListViewModel}">
-                <view:TasksListView/>
-            </DataTemplate>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter">
+            </BooleanToVisibilityConverter>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

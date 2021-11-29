@@ -10,7 +10,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Border
-            Background="#d2a4e9"
+            Background="#2dbdaa"
             CornerRadius="10 0 0 0">
             <TextBlock
                 Text="{Binding Name}" 
@@ -23,9 +23,13 @@
         </Border>
 
         <Grid
-            Margin="50 70 50 50">
+            Margin="50 70 50 70">
 
-            <ListBox ItemsSource="{Binding Tasks}">
+            <ListBox 
+                ItemsSource="{Binding Tasks}"
+                ItemContainerStyle="{StaticResource ListBoxItemStyle}"
+                >
+
             </ListBox>
         </Grid>
         

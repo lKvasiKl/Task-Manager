@@ -4,15 +4,19 @@ using Task_Manager.Core;
 
 namespace Task_Manager.MVVM.ViewModel
 {
-    public class TasksListViewModel : ObservableObject
+    public class TasksListViewModel : TasksListBaseViewModel
     {
         private string _name;
+
+        private bool _needInitFocus;
+
         public string Name 
         { 
-            get
-            {
-                return _name;
+            get 
+            { 
+                return _name; 
             }
+
             set
             {
                 _name = value;
@@ -20,22 +24,30 @@ namespace Task_Manager.MVVM.ViewModel
             }
         }
 
-        public ObservableCollection<TaskViewModel> Tasks { get; set; }
+        public bool NeedInitFocus
+        {
+            get 
+            {  
+                return _needInitFocus; 
+            }
 
-        public TasksListViewModel()
+            set 
+            { 
+                _needInitFocus = value; 
+                OnPropertyChanged(); 
+            }
+        }
+
+        public TasksListViewModel() : base()
         {
             Name = "The list without name"; 
-            Tasks = new ObservableCollection<TaskViewModel>();
         }
 
-        public void AddTask(TaskViewModel task)
+        public TasksListViewModel(bool needInitFocus = true) : this()
         {
-            Tasks.Add(task);
+            NeedInitFocus = needInitFocus;
         }
 
-        public void Remove(TaskViewModel task)
-        {
-            Tasks.Remove(task);
-        }
+        
     }
 }

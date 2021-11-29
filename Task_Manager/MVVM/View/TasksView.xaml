@@ -4,9 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Task_Manager.MVVM.View"
+             xmlns:viewModels="clr-namespace:Task_Manager.MVVM.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="800" 
-             d:DesignWidth="1200">
+             d:DesignWidth="1200"
+             d:DataContext="{d:DesignInstance Type=viewModels:TasksViewModel}">
     <Grid>
         <Border
             Background="#d2a4e9"
@@ -25,7 +27,7 @@
             Margin="50 70 50 50">
 
             <Grid
-                Visibility="Visible">
+                Visibility="{Binding NeedShowPicture, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Image
                     Height="100"
                     Width="100"
@@ -47,7 +49,17 @@
                     >
                 </TextBlock>
             </Grid>
-
         </Grid>
+
+        <Grid
+            Margin="50 70 50 70">
+            <ListBox 
+                ItemsSource="{Binding Tasks}"
+                ItemContainerStyle="{StaticResource ListBoxItemStyle}"
+                >
+               
+            </ListBox>
+        </Grid>
+        
     </Grid>
 </UserControl>

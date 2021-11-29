@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Task_Manager.MVVM.ViewModel
 {
-    public class TasksViewModel
+    public class TasksViewModel : TasksListBaseViewModel
     {
+        public TasksViewModel() : base()
+        {
+
+        }
     }
 }

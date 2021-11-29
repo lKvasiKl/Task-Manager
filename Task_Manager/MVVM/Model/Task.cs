@@ -12,9 +12,11 @@ namespace Task_Manager.MVVM.Model
 
         public bool IsDone { get; set; } = false;
 
-        public DateOnly Date { get; set; } = new DateOnly();
+        public DateTime? Date { get; set; } = new DateTime();
 
-        public TimeOnly Time { get; set; } = new TimeOnly();
+        public DateTime? NotificationDate { get; set; } = new DateTime();
+
+        public DateTime? Time { get; set; } = new DateTime();
 
         public string TheNote { get; set; } = string.Empty;
 

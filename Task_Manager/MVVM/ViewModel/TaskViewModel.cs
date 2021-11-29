@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,7 +37,7 @@ namespace Task_Manager.MVVM.ViewModel
             }
         }
 
-        public DateOnly Date
+        public DateTime? Date
         {
             get
             {
@@ -50,7 +50,20 @@ namespace Task_Manager.MVVM.ViewModel
             }
         }
 
-        public TimeOnly Time
+        public DateTime? NotificationDate
+        {
+            get
+            {
+                return _task.NotificationDate;
+            }
+            set
+            {
+                _task.NotificationDate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DateTime? Time
         {
             get
             {

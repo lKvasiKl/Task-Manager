@@ -23,10 +23,10 @@
 
         <Grid
             Margin="50 70 50 50">
-            
+
             <Grid
-            Visibility="Visible">
-            <Image
+                Visibility="{Binding NeedShowPicture, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Image
                 Height="95"
                 Width="95"
                 Source="/MVVM/View/Important.png"
@@ -34,9 +34,9 @@
                 HorizontalAlignment="Center"
                 Margin="0 0 0 210"
                 >
-            </Image>
+                </Image>
 
-            <TextBlock
+                <TextBlock
                 Text="Tasks marked with&#x0a;a star will be displayed here."
                 TextAlignment="Center"
                 FontSize="20"
@@ -45,9 +45,20 @@
                 VerticalAlignment="Center"
                 Margin="0 0 0 60"
                 >
-            </TextBlock>
+                </TextBlock>
             </Grid>
+        </Grid>
+
+        <Grid
+            Margin="50 70 50 70">
             
+            <ListBox 
+                ItemsSource="{Binding Tasks}"
+                ItemContainerStyle="{StaticResource ListBoxItemStyle}"
+                >
+
+            </ListBox>
+
         </Grid>
 
     </Grid>

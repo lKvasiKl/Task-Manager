@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MaterialDesignThemes.Wpf;
+using Task_Manager.MVVM.ViewModel;
 
 namespace Task_Manager
 {
@@ -44,11 +46,15 @@ namespace Task_Manager
             important.Checked += Checked;
             tasks.Checked += Checked;
 
+
             //Сохраняет актуальный GreedSplitter
             _paletteHelper.SetTheme(theme);
             GridLength gridLength = new GridLength(Settings.Default.GridSplitter);
             Spliter.Width = gridLength;
         }
+
+        public bool IsDarkTheme { get; set; }
+        private readonly PaletteHelper _paletteHelper = new();
 
         private void Checked(object sender, RoutedEventArgs e)
         {
@@ -89,9 +95,6 @@ namespace Task_Manager
             }
         }
 
-        public bool IsDarkTheme { get; set; }
-        private readonly PaletteHelper _paletteHelper = new();
-
         private void Toggle_Theme(object sender, RoutedEventArgs e)
         {
             ITheme theme = _paletteHelper.GetTheme();
@@ -114,7 +117,49 @@ namespace Task_Manager
             _paletteHelper.SetTheme(theme);
         }
 
-        
+        private void TextBox_Initialized(object sender, EventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                textBox.Focus();
+                textBox.CaretIndex = textBox.Text.Length;
+            }
+        }
 
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                textBox.IsReadOnly = true;
+                textBox.Focusable = false;
+                textBox.Cursor = Cursors.Arrow;
+            }
+        }
+
+        private void AddTask_Button(object sender, RoutedEventArgs e)
+        {
+            addTaskButton.Style = (Style)Resources["AddTaskButtonClick"];
+        }
+
+        private void AddTaskTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox textBox && textBox.Text.Length == 0)
+            {
+                addTaskButton.Style = (Style)Application.Current.FindResource("AddTaskButton");
+            }
+        }
+
+        private void MainWindowPage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            AddTaskTextBox_LostFocus(sender, e);
+        }
+
+        private void Enter_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                addTaskButton.Style = (Style)Application.Current.FindResource("AddTaskButton");
+            }
+        }
     }
 }

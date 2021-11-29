@@ -14,8 +14,212 @@
         Background="{x:Null}"
         AllowsTransparency="True"
         WindowStyle="None"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Name="MainWindowPage"
+        MouseLeftButtonDown="MainWindowPage_MouseLeftButtonDown"
+        >
 
+    
+    <Window.Resources>
+        
+        <Style BasedOn="{StaticResource {x:Type Button}}"
+           TargetType="{x:Type Button}"
+           x:Key="AddTaskButtonClick">
+
+            <Style.Setters>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Border
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch"
+                                Background="{TemplateBinding Background}"
+                                Margin="10 0 10 0"
+                                CornerRadius="3"
+                                Grid.Column="0"
+                                >
+                                    <Ellipse
+                                    Height="20"
+                                    Width="20"
+                                    Fill="Transparent"
+                                    Stroke="{DynamicResource MaterialDesignBody}"
+                                    StrokeThickness="2"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Margin="10 0 0 0"
+                                    >
+                                    </Ellipse>
+                                </Border>
+
+                                <Grid >
+                                    <TextBox
+                                        FontSize="20"
+                                        BorderThickness="0"
+                                        Background="Transparent"
+                                        Visibility="Visible"
+                                        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        Margin="50 0 85 5"
+                                        Initialized="TextBox_Initialized"
+                                        LostFocus="AddTaskTextBox_LostFocus"
+                                        KeyDown="Enter_KeyDown"
+                                        Text="{Binding AddTaskButtonVM.Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                        >
+
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox">
+                                                <Style.Triggers>
+                                                    <EventTrigger RoutedEvent="MouseLeftButtonDown">
+                                                        <EventTrigger.Actions>
+                                                            <BeginStoryboard>
+                                                                <Storyboard>
+                                                                </Storyboard>
+                                                            </BeginStoryboard>
+                                                        </EventTrigger.Actions>
+                                                    </EventTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                        
+                                    </TextBox>
+
+                                    <Button
+                                        Content="🕓"
+                                        Margin="750 0 2 0"
+                                        Height="50"
+                                        Width="55"
+                                        VerticalAlignment="Bottom"
+                                        HorizontalAlignment="Right"
+                                        Style="{StaticResource ButtonTheme}"
+                                        Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                                        >
+                                        <Button.CommandParameter>
+                                            <Grid
+                                                Margin="-1">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition
+                                                        Height="*" />
+                                                    <RowDefinition
+                                                        Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <StackPanel
+                                                        Grid.Row="0"
+                                                        Orientation="Horizontal">
+                                                    <Calendar
+                                                        Height="405"
+                                                        materialDesign:CalendarAssist.Orientation="Horizontal"
+                                                        SelectedDate="{Binding AddTaskButtonVM.NotificationDate}"
+                                                        Margin="-1 -4 -1 0" 
+                                                        />
+                                                    <materialDesign:Clock
+                                                        Height="400"
+                                                        DisplayAutomation="ToMinutesOnly"
+                                                        Is24Hours="True"
+                                                        Style="{StaticResource MaterialDesignClockVertical}"
+                                                        Time="{Binding AddTaskButtonVM.Time}"
+                                                        Margin="-1 -4 -1 0" 
+                                                        />
+                                                </StackPanel>
+                                                <StackPanel
+                                                    Grid.Row="1"
+                                                    Margin="8"
+                                                    HorizontalAlignment="Right"
+                                                    Orientation="Horizontal">
+                                                    <Button
+                                                        Style="{DynamicResource MaterialDesignFlatButton}"
+                                                        Command="{Binding AddTaskButtonVM.DeselectDateCommand}"
+                                                        CommandParameter="0"
+                                                        Content="DELETE THE DUE DATE AND TIME" />
+                                                    <Button
+                                                        Style="{DynamicResource MaterialDesignFlatButton}"
+                                                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                                        CommandParameter="1"
+                                                        Content="OK" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Button.CommandParameter>
+                                    </Button>
+
+                                    <Button
+                                        Content="📅"
+                                        Margin="725 0 40 0"
+                                        Height="50"
+                                        Width="55"
+                                        VerticalAlignment="Bottom"
+                                        HorizontalAlignment="Right"
+                                        Style="{StaticResource ButtonTheme}"
+                                        Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                                        >
+                                        <Button.CommandParameter>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition
+                                                            Height="Auto" />
+                                                    <RowDefinition
+                                                            Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <Viewbox
+                                                        Stretch="Uniform"
+                                                        Width="380">
+                                                    <Calendar 
+                                                            materialDesign:CalendarAssist.Orientation="Horizontal"
+                                                            SelectedDate="{Binding AddTaskButtonVM.Date}"
+                                                            x:Name="Calendar"
+                                                            Margin="-1 -4 -1 0" />
+                                                </Viewbox>
+                                                <StackPanel
+                                                        Grid.Row="1"
+                                                        Margin="8"
+                                                        HorizontalAlignment="Right"
+                                                        Orientation="Horizontal">
+                                                    <Button
+                                                        Style="{DynamicResource MaterialDesignFlatButton}" 
+                                                        Command="{Binding AddTaskButtonVM.DeselectDateCommand}"
+                                                        CommandParameter="0"
+                                                        Content="DELETE THE DUE DATE" />
+                                                    <Button
+                                                            Style="{DynamicResource MaterialDesignFlatButton}"
+                                                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                                            CommandParameter="1"
+                                                            Content="OK" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Button.CommandParameter>
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+
+                <Setter 
+                    Property="Background"
+                    Value="{DynamicResource MaterialDesignSelection}"
+                    />
+                <Setter 
+                    Property="BorderThickness"
+                    Value="0"
+                    />
+
+            </Style.Setters>
+
+            <Style.Triggers>
+                <Trigger
+                    Property="IsMouseOver"
+                    Value="True"
+                    >
+                    <Setter
+                        Property="Cursor"
+                        Value="IBeam"
+                        >
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    
     <Window.DataContext>
         <viewModel:MainVeiwModel/>
     </Window.DataContext>
@@ -24,22 +228,24 @@
         UniformCornerRadius="15"
         Background="{DynamicResource MaterialDesignPaper}"
         Margin="25">
+        
         <materialDesign:DialogHost
             CloseOnClickAway="True"
             x:Name="DialogHost">
+            
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition 
-                x:Name="Spliter"
-                Width="205" 
-                MinWidth="165" 
-                MaxWidth="280"/>
+                        x:Name="Spliter"
+                        Width="205" 
+                        MinWidth="165" 
+                        MaxWidth="280"/>
                     <ColumnDefinition 
-                Width="49*"/>
+                        Width="49*"/>
                     <ColumnDefinition 
-                x:Name="Task" 
-                Width="0*" 
-                MinWidth="0"/>
+                        x:Name="Task" 
+                        Width="0*" 
+                        MinWidth="0"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="31*"/>
@@ -135,7 +341,7 @@
                             Style="{StaticResource RadioButtonTheme}" 
                             Command="{Binding TasksCommand}"
                             >
-                            
+
                         </RadioButton>
 
                         <RadioButton x:Name="planned"
@@ -187,32 +393,191 @@
 
                         <ListBox 
                             Name="userTasksList"
-                            Margin="10 352 10 0"
+                            Margin="8 352 8 0"
                             ItemsSource="{Binding TasksLists}"
                             SelectedItem="{Binding SelectedTasksList, Mode=TwoWay}"
-                            ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                            ScrollViewer.VerticalScrollBarVisibility="Hidden" 
                             >
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Style.Setters>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListBoxItem">
+                                                    <Border
+                                                            VerticalAlignment="Stretch"
+                                                            HorizontalAlignment="Stretch"
+                                                            Background="{TemplateBinding Background}"
+                                                            CornerRadius="3"
+                                                            Height="38"
+                                                            Margin="2 0 2 2"
+                                                            >
+                                                        <Grid>
+                                                            <TextBlock
+                                                                Text="{TemplateBinding Property=ContentStringFormat}"
+                                                                FontSize="20"
+                                                                TextElement.Foreground="{TemplateBinding BorderBrush}"
+                                                                FontWeight="Bold"
+                                                                HorizontalAlignment="Left"
+                                                                VerticalAlignment="Center"
+                                                                Margin="-3 5 0 10"
+                                                                >
+                                                            </TextBlock>
+                                                            <ContentPresenter>
+                                                            </ContentPresenter>
+                                                        </Grid>
+
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+
+                                        <Setter 
+                                            Property="Background"
+                                            Value="Transparent"/>
+                                        <Setter 
+                                            Property="BorderThickness"
+                                            Value="0"/>
+
+                                    </Style.Setters>
+
+                                    <Style.Triggers>
+
+                                        <Trigger
+                                            Property="IsSelected"
+                                            Value="True"
+                                            >
+                                            <Setter
+                                                Property="Background"
+                                                >
+                                                <Setter.Value>
+                                                    <SolidColorBrush 
+                                                        Color="#bdc2c7"
+                                                        Opacity="0.25"/>
+                                                </Setter.Value>
+                                            </Setter>
+
+                                            <Setter 
+                                                Property="ContentStringFormat"
+                                                Value="|"/>
+                                            <Setter
+                                                Property="BorderBrush"
+                                                Value="#52dce1"/>
+                                        </Trigger>
+
+                                        <Trigger
+                                            Property="IsMouseOver"
+                                            Value="True">
+                                            <Setter
+                                                Property="Background"
+                                                >
+                                                <Setter.Value>
+                                                    <SolidColorBrush 
+                                                        Color="#bdc2c7"
+                                                        Opacity="0.25"
+                                                        />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+
+                                    </Style.Triggers>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock 
-                                        Text="{Binding Name}"
-                                        
-                                        >
 
-                                    </TextBlock>
+                                    <Grid>
+
+                                        <TextBox
+                                            x:Name="textBox"
+                                            Text="{Binding Name}"
+                                            BorderThickness="0"
+                                            Background="Transparent"
+                                            Visibility="Visible"
+                                            TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+                                            HorizontalAlignment="Stretch"
+                                            FontSize="20"
+                                            VerticalAlignment="Center"
+                                            Margin="5 0 0 5"
+                                            Cursor="Arrow"
+                                            Initialized="TextBox_Initialized"
+                                            LostFocus="TextBox_LostFocus"
+                                            >
+                                            <TextBox.ContextMenu>
+                                                <ContextMenu
+                                                    Visibility="Collapsed">
+                                                </ContextMenu>
+                                            </TextBox.ContextMenu>
+                                            
+                                            <TextBox.Style>
+                                                <Style TargetType="TextBox">
+                                                    <Style.Triggers>
+                                                        <EventTrigger RoutedEvent="MouseLeftButtonDown">
+                                                            <EventTrigger.Actions>
+                                                                <BeginStoryboard>
+                                                                    <Storyboard>
+                                                                        <DoubleAnimation 
+                                                                            Storyboard.TargetProperty="FontSize" 
+                                                                            From="20"
+                                                                            To="18"
+                                                                            Duration="0:0:0.1"
+                                                                            AutoReverse="True"
+                                                                            >
+                                                                            <DoubleAnimation.EasingFunction>
+                                                                                <ElasticEase 
+                                                                                    EasingMode="EaseOut" 
+                                                                                    Oscillations="0" 
+                                                                                    Springiness="1" 
+                                                                                    />
+                                                                            </DoubleAnimation.EasingFunction>
+                                                                        </DoubleAnimation>
+                                                                    </Storyboard>
+                                                                </BeginStoryboard>
+                                                            </EventTrigger.Actions>
+                                                        </EventTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBox.Style>
+                                        </TextBox>
+                                    </Grid>
+                                    <DataTemplate.Triggers>
+                                        <DataTrigger 
+                                            Binding="{Binding NeedInitFocus}" 
+                                            Value="False">
+                                            <Setter 
+                                                TargetName="textBox"
+                                                Property="Focusable"
+                                                Value="False"
+                                                />
+                                            <Setter 
+                                                TargetName="textBox"
+                                                Property="Cursor"
+                                                Value="Arrow"
+                                                />
+
+                                        </DataTrigger>
+                                    </DataTemplate.Triggers>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
                     </Grid>
 
-                    
-                    
-
                     <Grid Grid.Column="0" Grid.Row="2">
                         <Button
+                            Content="＋  Create list"
+                            Margin="0 0 40 0"
                             Cursor="Hand"
                             Style="{StaticResource ButtonTheme}"
-                            Command="{Binding AddTaskListCommand}">
+                            Command="{Binding AddTaskListCommand}"
+                            >
+                        </Button>
+
+                        <Button
+                            Content="🗑"
+                            Margin="225 0 0 0"
+                            Style="{StaticResource ButtonTheme}"
+                            Command="{Binding RemoveTaskListCommand}" Cursor="Hand"
+                            >
                         </Button>
                     </Grid>
                 </Grid>
@@ -229,7 +594,6 @@
                 <Grid Grid.Column="1" Grid.Row="1">
                     <ContentControl
                         Content="{Binding CurrentView}">
-
                     </ContentControl>
 
                     <StackPanel>
@@ -252,18 +616,18 @@
                                             Orientation="Horizontal"
                                             VerticalAlignment="Top"
                                             HorizontalAlignment="Center">
-                                        <TextBlock 
+                                            <TextBlock 
                                             Width="115"
                                             Height="15"
                                             VerticalAlignment="Center"    
                                             TextAlignment="Center"
                                             Text="Light ☼"/>
-                                        <ToggleButton 
+                                            <ToggleButton 
                                             Cursor="Hand"
                                             ToolTip="Enable Dark Mode"
                                             x:Name="themeToggle"
                                             Click="Toggle_Theme"/>
-                                        <TextBlock 
+                                            <TextBlock 
                                             Width="115"
                                             Height="15"
                                             VerticalAlignment="Center"
@@ -274,8 +638,27 @@
                                 </ListBoxItem>
                             </ListBox>
                         </materialDesign:PopupBox>
-                        
                     </StackPanel>
+                    
+                    <!--Add task-->
+                    <Button
+                        x:Name="addTaskButton"
+                        Content="＋  Add task"
+                        Margin="30 0 30 10"
+                        Height="50"
+                        VerticalAlignment="Bottom"
+                        Click="AddTask_Button"
+                        Cursor="IBeam"
+                        Style="{StaticResource AddTaskButton}"
+                        >
+                        <Button.InputBindings>
+                            <KeyBinding
+                                Key="{x:Static Key.Enter}"
+                                Command="{Binding AddTaskToListCommand}"/>
+                        </Button.InputBindings>
+                        
+                    </Button>
+                    
                 </Grid>
             </Grid>
         </materialDesign:DialogHost>
