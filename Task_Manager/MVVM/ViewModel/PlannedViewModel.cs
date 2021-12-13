@@ -8,5 +8,9 @@ namespace Task_Manager.MVVM.ViewModel
 {
     public class PlannedViewModel : TasksListBaseViewModel
     {
+        public PlannedViewModel() : base()
+        {
+
+        }
     }
 }

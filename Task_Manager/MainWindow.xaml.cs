@@ -161,5 +161,6 @@ namespace Task_Manager
                 addTaskButton.Style = (Style)Application.Current.FindResource("AddTaskButton");
             }
         }
+
     }
 }

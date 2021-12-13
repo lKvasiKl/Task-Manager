@@ -12,17 +12,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Task_Manager.MVVM.ViewModel;
 
 namespace Task_Manager.MVVM.View
 {
     /// <summary>
-    /// Логика взаимодействия для TasksListView.xaml
+    /// Логика взаимодействия для TaskEditView.xaml
     /// </summary>
-    public partial class TasksListView : UserControl
+    public partial class TaskEditView : UserControl
     {
-        public TasksListView()
+        public TaskEditView()
         {
             InitializeComponent();
+
         }
 
     }

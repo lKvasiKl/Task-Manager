@@ -17,6 +17,7 @@
         WindowStartupLocation="CenterScreen"
         Name="MainWindowPage"
         MouseLeftButtonDown="MainWindowPage_MouseLeftButtonDown"
+        
         >
 
     
@@ -67,6 +68,12 @@
                                         KeyDown="Enter_KeyDown"
                                         Text="{Binding AddTaskButtonVM.Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                         >
+
+                                        <TextBox.ContextMenu>
+                                            <ContextMenu
+                                                    Visibility="Collapsed">
+                                            </ContextMenu>
+                                        </TextBox.ContextMenu>
 
                                         <TextBox.Style>
                                             <Style TargetType="TextBox">
@@ -238,14 +245,15 @@
                     <ColumnDefinition 
                         x:Name="Spliter"
                         Width="205" 
-                        MinWidth="165" 
-                        MaxWidth="280"/>
+                        MinWidth="180" 
+                        MaxWidth="280"
+                        />
                     <ColumnDefinition 
-                        Width="49*"/>
+                        Width="49*"
+                        />
                     <ColumnDefinition 
-                        x:Name="Task" 
-                        Width="0*" 
-                        MinWidth="0"/>
+                        Width="Auto" 
+                        MaxWidth="350"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="31*"/>
@@ -322,15 +330,66 @@
 
 
                     <Grid Grid.Column="0" Grid.Row="0" x:Name="Tabs">
-
-                        <TextBox
-                            Height="35"
+                        <Border 
+                            Margin="10 140 10 10"
                             VerticalAlignment="Top"
-                            FontSize="17"
-                            Margin="10 140 10 0"
-                            Style="{StaticResource TextBoxStyle}"
+                            CornerRadius="1"
+                            Background="{DynamicResource MaterialDesignToolBarBackground}"
+                            Height="35"
                             >
-                        </TextBox>
+
+                            <Grid>
+                                <Rectangle StrokeThickness="1"/>
+                                <TextBox
+                                    Margin="1 0 1 -6"
+                                    Height="30"
+                                    x:Name="searchTextBox"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding CurrentView.SearchFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    BorderThickness="0"
+                                    FontSize="17"
+                                    Background="Transparent"
+                                    Padding="-2"
+                                    Foreground="{DynamicResource MaterialDesignBody}" Cursor="IBeam"
+                                >
+                                </TextBox>
+
+                                <TextBlock
+                                    IsHitTestVisible="False"
+                                    Text="Search"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"
+                                    Margin="10 0 0 0"
+                                    FontSize="15"
+                                    Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                    >
+
+                                    <TextBlock.Style>
+                                        <Style
+                                        TargetType="{x:Type TextBlock}">
+                                            <Style.Triggers>
+                                                <DataTrigger
+                                                    Binding="{Binding Text, ElementName=searchTextBox}"
+                                                    Value="">
+
+                                                    <Setter
+                                                        Property="Visibility"
+                                                        Value="Visible"
+                                                    >
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+
+                                            <Setter
+                                                Property="Visibility"
+                                                Value="Hidden"
+                                            >
+                                            </Setter>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                        </Border>
 
                         <RadioButton x:Name="tasks"
                             Margin="10 300 10 0"
@@ -566,7 +625,8 @@
                         <Button
                             Content="＋  Create list"
                             Margin="0 0 40 0"
-                            Cursor="Hand"
+                            HorizontalAlignment="Stretch"
+                            Cursor="Arrow"
                             Style="{StaticResource ButtonTheme}"
                             Command="{Binding AddTaskListCommand}"
                             >
@@ -574,9 +634,11 @@
 
                         <Button
                             Content="🗑"
-                            Margin="225 0 0 0"
+                            HorizontalAlignment="Right"
+                            Width="55"
                             Style="{StaticResource ButtonTheme}"
-                            Command="{Binding RemoveTaskListCommand}" Cursor="Hand"
+                            Command="{Binding RemoveTaskListCommand}" 
+                            Cursor="Arrow"
                             >
                         </Button>
                     </Grid>
@@ -654,12 +716,21 @@
                         <Button.InputBindings>
                             <KeyBinding
                                 Key="{x:Static Key.Enter}"
-                                Command="{Binding AddTaskToListCommand}"/>
+                                Command="{Binding AddTaskToListCommand}"
+                                />
                         </Button.InputBindings>
-                        
+
                     </Button>
+                </Grid>
+                <Grid Grid.Column="2"
+                      Grid.Row="1"
+                      >
+                    <ContentControl 
+                        Content="{Binding TaskEditVM}">
+                    </ContentControl>
                     
                 </Grid>
+
             </Grid>
         </materialDesign:DialogHost>
     </materialDesign:Card>

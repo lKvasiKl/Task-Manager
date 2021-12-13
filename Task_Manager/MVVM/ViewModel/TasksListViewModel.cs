@@ -20,6 +20,10 @@ namespace Task_Manager.MVVM.ViewModel
             set
             {
                 _name = value;
+                if (_name == string.Empty)
+                {
+                    _name = "The list without name";
+                }
                 OnPropertyChanged();
             }
         }

@@ -244,6 +244,70 @@
         </Style.Triggers>
     </Style>
 
+
+    <Style BasedOn="{StaticResource {x:Type Button}}"
+           TargetType="{x:Type Button}"
+           x:Key="AddToMyDayButton">
+
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch"
+                                BorderThickness="0"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="3"
+                                >
+                            </Border>
+
+                            <Grid >
+                                <TextBlock
+                                        Text="{TemplateBinding Property=Content}"
+                                        FontSize="20"
+                                        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        Margin="18 0 0 5"
+                                        >
+                                </TextBlock>
+                            </Grid>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Setter 
+                Property="Background"
+                Value="{DynamicResource MaterialDesignCardBackground}"
+                />
+            <Setter 
+                Property="BorderThickness"
+                Value="0"/>
+
+        </Style.Setters>
+
+        <Style.Triggers>
+            <Trigger
+                Property="IsMouseOver"
+                Value="True"
+                >
+                <Setter
+                    Property="Cursor"
+                    Value="Arrow"
+                    >
+                </Setter>
+                <Setter
+                    Property="Background"
+                    Value="{DynamicResource MaterialDesignSelection}"
+                    >
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>
     
     

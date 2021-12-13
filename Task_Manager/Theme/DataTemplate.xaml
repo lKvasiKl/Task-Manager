@@ -18,6 +18,9 @@
     <DataTemplate DataType="{x:Type viewModel:TasksListViewModel}">
         <view:TasksListView/>
     </DataTemplate>
+    <DataTemplate DataType="{x:Type viewModel:TaskEditViewModel}">
+        <view:TaskEditView/>
+    </DataTemplate>
 
     <DataTemplate DataType="{x:Type viewModel:TaskViewModel}">
         <Grid>
@@ -36,6 +39,7 @@
 
             <CheckBox 
                 Name="Checkbox"
+                IsChecked="{Binding IsDone}"
                 Grid.Column="0"
                 Height="23"
                 Width="23"
@@ -60,6 +64,7 @@
                                 FontWeight="SemiBold"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
+                                Focusable="{TemplateBinding Focusable}"
                                 TextElement.Foreground="{DynamicResource MaterialDesignBodyLight}"
                                 Visibility="Collapsed"
                                 Margin="0 0 0 1"
@@ -87,17 +92,17 @@
                                 <Setter
                                     TargetName="IsDoneButtonEllipse"
                                     Property="Fill"
-                                    Value="#327891"
+                                    Value="#568feb"
                                     />
                                 <Setter
                                     TargetName="IsDoneButtonEllipse"
                                     Property="Fill"
-                                    Value="#327891"
+                                    Value="#568feb"
                                     />
                                 <Setter
                                     TargetName="IsDoneButtonEllipse"
                                     Property="Stroke"
-                                    Value="#327891"
+                                    Value="#568feb"
                                     />
                                 <Setter
                                     TargetName="IsDoneButton"
@@ -116,24 +121,52 @@
                 </CheckBox.Template>
             </CheckBox>
 
-            <TextBlock
+            <TextBox
                 x:Name="TaskDescription"
                 Grid.Column="1"
-                Text="{Binding Description}"
+                Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 FontSize="20"
+                Focusable="False"
                 Width="Auto"
+                Background="Transparent"
+                BorderThickness="0"
+                Cursor="Arrow"
                 TextWrapping="Wrap"
                 TextElement.Foreground="{DynamicResource MaterialDesignBody}"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Center"
                 Margin="18 0 0 5"
                 >
-            </TextBlock>
+
+                <TextBox.ContextMenu>
+                    <ContextMenu
+                        Visibility="Collapsed">
+                    </ContextMenu>
+                </TextBox.ContextMenu>
+
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Style.Triggers>
+                            <EventTrigger RoutedEvent="MouseLeftButtonDown">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+
+            </TextBox>
+            
 
             <CheckBox
                     Grid.Column="2"
                     Height="30"
                     Width="30"
+                    IsChecked="{Binding IsImportant}"
                     VerticalAlignment="Top"
                     HorizontalAlignment="Right"
                     Margin="10 25 10 0"
@@ -170,14 +203,10 @@
                                             <Trigger
                                                 Property="IsMouseOver"
                                                 Value="True">
-                                                <Setter
-                                                    Property="Cursor"
-                                                    Value="Hand"
-                                                    />
                                                 <Setter 
                                                     TargetName="StarButton"
                                                     Property="Stroke"
-                                                    Value="#327891"
+                                                    Value="#568feb"
                                                     />
                                             </Trigger>
 
@@ -188,12 +217,12 @@
                                                 <Setter 
                                                     TargetName="StarButton"
                                                     Property="Fill"
-                                                    Value="#327891"
+                                                    Value="#568feb"
                                                     />
                                                 <Setter 
                                                     TargetName="StarButton"
                                                     Property="Stroke"
-                                                    Value="#327891"
+                                                    Value="#568feb"
                                                     />
                                             </Trigger>
                                         </ControlTemplate.Triggers>

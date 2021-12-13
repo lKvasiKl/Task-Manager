@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Task_Manager.MVVM.View"
+             xmlns:viewModel="clr-namespace:Task_Manager.MVVM.ViewModel"
+             d:DataContext="{d:DesignInstance {x:Type viewModel:PlannedViewModel}}"
              mc:Ignorable="d" 
              d:DesignHeight="800" 
              d:DesignWidth="1200">
@@ -55,7 +57,8 @@
             Margin="50 70 50 70">
 
             <ListBox 
-                ItemsSource="{Binding Tasks}"
+                ItemsSource="{Binding FilteredTasks.View}"
+                SelectedItem="{Binding SelectedTask, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                 ItemContainerStyle="{StaticResource ListBoxItemStyle}"
                 >
 

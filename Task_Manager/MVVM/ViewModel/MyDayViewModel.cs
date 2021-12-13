@@ -8,5 +8,10 @@ namespace Task_Manager.MVVM.ViewModel
 {
     public class MyDayViewModel : TasksListBaseViewModel
     {
+        public MyDayViewModel() : base()
+        { 
+
+        }
+
     }
 }

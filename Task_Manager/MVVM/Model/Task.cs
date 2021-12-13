@@ -12,6 +12,10 @@ namespace Task_Manager.MVVM.Model
 
         public bool IsDone { get; set; } = false;
 
+        public bool IsImportant { get; set; } = false;
+
+        public bool IsMyDay { get; set; } = false;
+
         public DateTime? Date { get; set; } = new DateTime();
 
         public DateTime? NotificationDate { get; set; } = new DateTime();

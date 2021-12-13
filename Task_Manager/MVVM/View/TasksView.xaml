@@ -54,7 +54,8 @@
         <Grid
             Margin="50 70 50 70">
             <ListBox 
-                ItemsSource="{Binding Tasks}"
+                ItemsSource="{Binding FilteredTasks.View}"
+                SelectedItem="{Binding SelectedTask, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                 ItemContainerStyle="{StaticResource ListBoxItemStyle}"
                 >
                

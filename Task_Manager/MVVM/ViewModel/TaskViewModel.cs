@@ -11,12 +11,15 @@ namespace Task_Manager.MVVM.ViewModel
     {
         private Task _task;
 
+        public RelayCommand DeselectDateCommand { get; set; }
+
         public string Description
         {
             get
             {
                 return _task.Description;
             }
+
             set
             {
                 _task.Description = value;
@@ -30,9 +33,38 @@ namespace Task_Manager.MVVM.ViewModel
             {
                 return _task.IsDone;
             }
+
             set
             {
                 _task.IsDone = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsImportant
+        {
+            get
+            {
+                return _task.IsImportant;
+            }
+
+            set
+            {
+                _task.IsImportant = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsMyDay
+        {
+            get
+            {
+                return _task.IsMyDay;
+            }
+
+            set
+            {
+                _task.IsMyDay = value;
                 OnPropertyChanged();
             }
         }
@@ -43,6 +75,7 @@ namespace Task_Manager.MVVM.ViewModel
             {
                 return _task.Date;
             }
+
             set
             {
                 _task.Date = value;
@@ -56,6 +89,7 @@ namespace Task_Manager.MVVM.ViewModel
             {
                 return _task.NotificationDate;
             }
+
             set
             {
                 _task.NotificationDate = value;
@@ -69,6 +103,7 @@ namespace Task_Manager.MVVM.ViewModel
             {
                 return _task.Time;
             }
+
             set
             {
                 _task.Time = value;
@@ -82,6 +117,7 @@ namespace Task_Manager.MVVM.ViewModel
             {
                 return _task.TheNote;
             }
+
             set
             {
                 _task.TheNote = value;
@@ -93,6 +129,26 @@ namespace Task_Manager.MVVM.ViewModel
         public TaskViewModel()
         {
             _task = new Task();
+
+            DeselectDateCommand = new RelayCommand(o =>
+            {
+                Date = null;
+                NotificationDate = null;
+                Time = null;
+            });
+
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is TaskViewModel taskVM)
+            {
+                if (_task == taskVM._task)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

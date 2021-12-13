@@ -5,28 +5,69 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Task_Manager.MVVM.View"
              xmlns:viewModel="clr-namespace:Task_Manager.MVVM.ViewModel"
-             d:DataContext="{d:DesignInstance Type=viewModel:TasksListViewModel}"
+             d:DataContext="{d:DesignInstance {x:Type viewModel:TasksListViewModel}}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Border
             Background="#2dbdaa"
             CornerRadius="10 0 0 0">
-            <TextBlock
-                Text="{Binding Name}" 
-                FontSize="25"
-                FontWeight="Bold"
-                TextElement.Foreground="{DynamicResource MaterialDesignBackground}"
-                Margin="40 20 0 0"
-                >
-            </TextBlock>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBox
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                    FontSize="25"
+                    FontWeight="Bold"
+                    Height="Auto"
+                    Width="Auto"
+                    MaxLength="25"
+                    BorderThickness="0"
+                    Background="Transparent"
+                    TextElement.Foreground="{DynamicResource MaterialDesignBackground}"
+                    Margin="40 20 0 0" 
+                    Cursor="IBeam"
+                    >
+
+                    <TextBox.ContextMenu>
+                        <ContextMenu
+                            Visibility="Collapsed">
+                        </ContextMenu>
+                    </TextBox.ContextMenu>
+
+                    <TextBox.Style>
+                        <Style TargetType="TextBox">
+                            <Style.Triggers>
+                                <EventTrigger RoutedEvent="MouseLeftButtonDown">
+                                    <EventTrigger.Actions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger.Actions>
+                                </EventTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+
+                </TextBox>
+            </Grid>
         </Border>
 
         <Grid
             Margin="50 70 50 70">
 
             <ListBox 
-                ItemsSource="{Binding Tasks}"
+                ItemsSource="{Binding FilteredTasks.View}"
+                SelectedItem="{Binding SelectedTask, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 ItemContainerStyle="{StaticResource ListBoxItemStyle}"
                 >
 
