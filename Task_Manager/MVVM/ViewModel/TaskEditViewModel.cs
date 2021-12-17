@@ -15,7 +15,11 @@ namespace Task_Manager.MVVM.ViewModel
 
         public bool IsVisible
         {
-            get { return _isVisible; }
+            get 
+            { 
+                return _isVisible; 
+            }
+
             set 
             {
                 _isVisible = value;
@@ -33,10 +37,11 @@ namespace Task_Manager.MVVM.ViewModel
             set
             {
                 _taskViewModel = value;
-                if(_taskViewModel != null)
+                if (_taskViewModel != null)
                 {
                     IsVisible = true;
                     _taskViewModel.PropertyChanged += IsDecorated;
+                    OnPropertyChanged(nameof(Decorations));
                 }
                 else
                 {
@@ -87,7 +92,7 @@ namespace Task_Manager.MVVM.ViewModel
             DeleteTaskFromList = new RelayCommand(o =>
             {
                 OnPropertyChanged("TaskRemoved");
-                CloseEditWindow.Execute(this);
+                CloseEditWindow.Execute(o);
             });
         }
     }

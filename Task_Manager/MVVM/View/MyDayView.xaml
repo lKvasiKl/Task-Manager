@@ -55,8 +55,51 @@
         <Grid
             Margin="50 70 50 70">
 
+            <Grid.RowDefinitions>
+                <RowDefinition>
+                </RowDefinition>
+                <RowDefinition>
+                </RowDefinition>
+            </Grid.RowDefinitions>
+
             <ListBox 
+                Margin="10 0 10 5"
+                Grid.Row="0"
                 ItemsSource="{Binding FilteredTasks.View}"
+                SelectedItem="{Binding SelectedTask, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                ItemContainerStyle="{StaticResource ListBoxItemStyle}"
+                >
+            </ListBox>
+
+            <Border
+                Visibility="{Binding NeedShowBorder, Converter={StaticResource BooleanToVisibilityConverter}}"
+                Margin="10 0 0 0"
+                Grid.Row="1"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Height="40"
+                Width="150"
+                CornerRadius="3"
+                Background="{DynamicResource MaterialDesignPaper}"
+                >
+
+                <TextBlock
+                    
+                    Text="🗸 Done Tasks"
+                    FontSize="20"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+                    >
+
+                </TextBlock>
+                
+            </Border>
+
+            <ListBox 
+                Margin="10 45 10 0"
+                Grid.Row="1"
+                ItemsSource="{Binding FilteredDoneTasks.View}"
                 SelectedItem="{Binding SelectedTask, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                 ItemContainerStyle="{StaticResource ListBoxItemStyle}"
                 >

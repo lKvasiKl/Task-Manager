@@ -12,6 +12,7 @@ namespace Task_Manager.MVVM.ViewModel
     public class TasksListBaseViewModel : ObservableObject
     {
         private bool _needShowPicture = true;
+        private bool _needShowBorder = false;
         private TaskViewModel? _selectedTask;
         private string _searchFilter;
 
@@ -21,6 +22,8 @@ namespace Task_Manager.MVVM.ViewModel
 
         public CollectionViewSource FilteredTasks { get; set; }
 
+        public CollectionViewSource FilteredDoneTasks { get; set; }
+
         public RelayCommand AddToImportantCommand { get; set; }
 
         public RelayCommand RemoveFromImportantCommand { get; set; }
@@ -28,6 +31,34 @@ namespace Task_Manager.MVVM.ViewModel
         public RelayCommand AddorRemoveToMyDayCommand { get; set; }
 
         public RelayCommand RemoveFromMyDayCommand { get; set; }
+
+        public bool NeedShowPicture
+        {
+            get
+            {
+                return _needShowPicture;
+            }
+
+            set
+            {
+                _needShowPicture = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool NeedShowBorder
+        {
+            get
+            {
+                return _needShowBorder;
+            }
+
+            set
+            {
+                _needShowBorder = value;
+                OnPropertyChanged();
+            }
+        }
 
         public TaskViewModel? SelectedTask
         {
@@ -54,19 +85,32 @@ namespace Task_Manager.MVVM.ViewModel
             {
                 _searchFilter = value;
                 AddFilter();
-                FilteredTasks.View.Refresh();
+                _selectedTask = null;
                 OnPropertyChanged();
+                FilteredTasks.View.Refresh();
+                
             }
         }
 
         public TasksListBaseViewModel()
         {
+            
             Tasks = new ObservableCollection<TaskViewModel>();
             DoneTasks = new ObservableCollection<TaskViewModel>();
             Tasks.CollectionChanged += TasksCollectionChanged;
+            DoneTasks.CollectionChanged += TasksCollectionChanged;
             Sort(Tasks);
-            FilteredTasks = new CollectionViewSource();
-            FilteredTasks.Source = Tasks;
+            FilteredTasks = new CollectionViewSource
+            {
+                Source = Tasks
+            };
+
+            FilteredDoneTasks = new CollectionViewSource
+            {
+                Source = DoneTasks
+            };
+
+            SearchFilter = string.Empty;
         }
 
         private void AddFilter()
@@ -85,8 +129,24 @@ namespace Task_Manager.MVVM.ViewModel
                         e.Accepted = false;
                     }
                 }
-                
             };
+
+            FilteredDoneTasks.Filter += (object sender, FilterEventArgs e) =>
+            {
+                TaskViewModel? search = e.Item as TaskViewModel;
+                if (SearchFilter != null)
+                {
+                    if (search.Description.Contains(SearchFilter, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        e.Accepted = true;
+                    }
+                    else
+                    {
+                        e.Accepted = false;
+                    }
+                }
+            };
+            
         }
 
         private void Sort(ObservableCollection<TaskViewModel> Tasks)
@@ -101,42 +161,48 @@ namespace Task_Manager.MVVM.ViewModel
 
         private void TasksCollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (sender is ObservableCollection<TaskViewModel> tasks)
+            if (Tasks.Count > 0 || DoneTasks.Count > 0)
             {
-                if (tasks.Count > 0)
-                {
-                    NeedShowPicture = false;
-                }
-                else
-                {
-                    NeedShowPicture = true;
-                }
+                NeedShowPicture = false;
+            }
+            else
+            
+            {
+                NeedShowPicture = true;
+            }
 
+            if (DoneTasks.Count > 0)
+            {
+                NeedShowBorder = true;
+            }
+            else
+            {
+                NeedShowBorder = false;
             }
         }
 
-        public bool NeedShowPicture
-        {
-            get
-            {
-                return _needShowPicture;
-            }
-
-            set
-            {
-                _needShowPicture = value;
-                OnPropertyChanged();
-            }
-        }
 
         public void AddTask(TaskViewModel task)
         {
             task.PropertyChanged -= ImportenceChanged;
             task.PropertyChanged += ImportenceChanged;
-            if (!Tasks.Contains(task))
+            if (task.IsDone)
+            {
+                if (!DoneTasks.Contains(task))
+                {
+                    DoneTasks.Add(task);
+                }
+            }
+            else if (!Tasks.Contains(task))
             {
                 Tasks.Add(task);
             }
+        }
+
+        public void RemoveTask(TaskViewModel task)
+        {
+            DoneTasks.Remove(task);
+            Tasks.Remove(task);
         }
 
         private void ImportenceChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -154,12 +220,22 @@ namespace Task_Manager.MVVM.ViewModel
                         RemoveFromImportantCommand.Execute(sender);
                     }
                 }
+
+                if (e.PropertyName == nameof(TaskViewModel.IsDone))
+                {
+                    if (taskViewModel.IsDone == true)
+                    {
+                        Tasks.Remove(taskViewModel);
+                        DoneTasks.Add(taskViewModel);
+                    }
+                    else
+                    {
+                        Tasks.Add(taskViewModel);
+                        DoneTasks.Remove(taskViewModel);
+                    }
+                }
             }
         }
-
-        public void RemoveTask(TaskViewModel task)
-        {
-            Tasks.Remove(task);
-        }
+        
     }
 }

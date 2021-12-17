@@ -24,7 +24,6 @@ namespace Task_Manager.MVVM.View
         public TaskEditView()
         {
             InitializeComponent();
-
         }
 
     }

@@ -186,7 +186,6 @@ namespace Task_Manager.MVVM.ViewModel
                             SelectedTasksList = TasksLists[^1];
                         }
                     }
-                    
                 }
                 else
                 {
@@ -221,10 +220,12 @@ namespace Task_Manager.MVVM.ViewModel
             {
                 if (CurrentView != null && TaskEditVM.Task != null && TaskEditVM.Task.IsMyDay == false)
                 {
+                    TaskEditVM.Task.IsMyDay = true;
                     MyDayVM.AddTask(TaskEditVM.Task);
                 }
                 else if (CurrentView != null && TaskEditVM.Task != null && TaskEditVM.Task.IsMyDay == true)
                 {
+                    TaskEditVM.Task.IsMyDay = false;
                     MyDayVM.RemoveTask(TaskEditVM.Task);
                 }
             });
@@ -249,24 +250,32 @@ namespace Task_Manager.MVVM.ViewModel
                 switch (e.PropertyName)
                 {
                     case "TaskRemoved":
-                        if (CurrentView is TasksListBaseViewModel viewModel1)
                         {
-                            viewModel1.RemoveTask(viewModel1.SelectedTask);
+                            if (CurrentView is TasksListBaseViewModel viewModel1)
+                            {
+                                viewModel1.RemoveTask(viewModel1.SelectedTask);
+                            }
+
+                            break;
+                        }
+                    case nameof(TaskEditViewModel.Task):
+                        {
+                            if (editVM.Task == null)
+                            {
+                                if (CurrentView is TasksListBaseViewModel viewModel2)
+                                {
+                                    viewModel2.SelectedTask = null;
+                                }
+                            }
+
+                            break;
                         }
                         
-                        break;
-                    case nameof(TaskEditViewModel.Task):
-                        if (editVM.Task == null)
-                        {
-                            if (CurrentView is TasksListBaseViewModel viewModel2)
-                            {
-                                viewModel2.SelectedTask = null;
-                            }
-                        }
-
-                        break;
                     default:
-                        break;
+                        {
+                            break;
+                        }
+                       
                 }
             }
         }
