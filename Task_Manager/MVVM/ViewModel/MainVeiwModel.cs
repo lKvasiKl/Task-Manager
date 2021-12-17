@@ -218,12 +218,13 @@ namespace Task_Manager.MVVM.ViewModel
 
             TaskEditVM.AddOrRemoveMyDayCommand = new RelayCommand(o =>
             {
-                if (CurrentView != null && TaskEditVM.Task != null && TaskEditVM.Task.IsMyDay == false)
+                if (CurrentView != null && TaskEditVM.Task != null && !TaskEditVM.Task.IsMyDay)
                 {
                     TaskEditVM.Task.IsMyDay = true;
                     MyDayVM.AddTask(TaskEditVM.Task);
+
                 }
-                else if (CurrentView != null && TaskEditVM.Task != null && TaskEditVM.Task.IsMyDay == true)
+                else if (CurrentView != null && TaskEditVM.Task != null && TaskEditVM.Task.IsMyDay)
                 {
                     TaskEditVM.Task.IsMyDay = false;
                     MyDayVM.RemoveTask(TaskEditVM.Task);

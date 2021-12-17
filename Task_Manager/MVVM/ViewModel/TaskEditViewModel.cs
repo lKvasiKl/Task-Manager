@@ -15,23 +15,39 @@ namespace Task_Manager.MVVM.ViewModel
 
         public bool IsVisible
         {
-            get 
-            { 
-                return _isVisible; 
+            get
+            {
+                return _isVisible;
             }
 
-            set 
+            set
             {
                 _isVisible = value;
                 OnPropertyChanged();
             }
         }
 
+        public string MyDayButtonContent
+        {
+            get
+            {
+                if (_taskViewModel != null && !_taskViewModel.IsMyDay)
+                {
+                    return "☼ Add to My Day view.";
+                }
+                else if (_taskViewModel != null && _taskViewModel.IsMyDay)
+                {
+                    return "☼ Delete from My Day view.";
+                }
+
+                return string.Empty;
+            }
+        }
         public TaskViewModel? Task
         {
-            get 
-            { 
-                return _taskViewModel; 
+            get
+            {
+                return _taskViewModel;
             }
 
             set
@@ -40,8 +56,9 @@ namespace Task_Manager.MVVM.ViewModel
                 if (_taskViewModel != null)
                 {
                     IsVisible = true;
-                    _taskViewModel.PropertyChanged += IsDecorated;
+                    _taskViewModel.PropertyChanged += TasksViewChandes;
                     OnPropertyChanged(nameof(Decorations));
+                    OnPropertyChanged(nameof(MyDayButtonContent));
                 }
                 else
                 {
@@ -51,11 +68,26 @@ namespace Task_Manager.MVVM.ViewModel
             }
         }
 
-        private void IsDecorated(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void TasksViewChandes(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == nameof(TaskViewModel.IsDone))
+            switch (e.PropertyName)
             {
-                OnPropertyChanged(nameof(Decorations));
+                case nameof(TaskViewModel.IsDone):
+                    {
+                        OnPropertyChanged(nameof(Decorations));
+                        break;
+                    }
+
+                case nameof(TaskViewModel.IsMyDay):
+                    {
+                        OnPropertyChanged(nameof(MyDayButtonContent));
+                        break;
+                    }
+
+                default:
+                    {
+                        break;
+                    }
             }
         }
 
@@ -63,7 +95,7 @@ namespace Task_Manager.MVVM.ViewModel
         {
             get
             {
-                if(Task != null && Task.IsDone == true)
+                if (Task != null && Task.IsDone == true)
                 {
                     return TextDecorations.Strikethrough;
                 }
@@ -71,6 +103,8 @@ namespace Task_Manager.MVVM.ViewModel
                 return null;
             }
         }
+
+
         public RelayCommand CloseEditWindow { get; set; }
 
         public RelayCommand AddOrRemoveMyDayCommand { get; set; }

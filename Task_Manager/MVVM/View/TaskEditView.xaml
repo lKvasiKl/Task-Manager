@@ -284,16 +284,18 @@
                 </Border>
 
                 <Button 
+                    x:Name="MyDayButton"
                     Grid.Row="2"
                     BorderThickness="0"
-                    Content=" ☼ Add to the view My Day"
+                    Content="{Binding MyDayButtonContent}"
                     Margin="10 0 10 5" 
                     Cursor="Arrow"
                     Width="330"
-                    Height="40"
+                    Height="40"                    
                     Command="{Binding AddOrRemoveMyDayCommand}"
                     Style="{StaticResource AddToMyDayButton}"
                     >
+
                 </Button>
 
                 <Button
