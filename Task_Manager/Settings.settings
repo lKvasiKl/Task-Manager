@@ -8,5 +8,8 @@
     <Setting Name="GridSplitter" Type="System.Double" Scope="User">
       <Value Profile="(Default)">205</Value>
     </Setting>
+    <Setting Name="Date" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">2021-12-19</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

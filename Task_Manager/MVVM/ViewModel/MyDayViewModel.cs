@@ -13,5 +13,13 @@ namespace Task_Manager.MVVM.ViewModel
 
         }
 
+        public void UpdateTasks ()
+        {
+            for (int i = 0; i < DoneTasks.Count; i++)
+            {
+                DoneTasks[i].IsDone = false;
+            }
+        }
+
     }
 }

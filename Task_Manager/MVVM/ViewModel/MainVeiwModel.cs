@@ -125,14 +125,21 @@ namespace Task_Manager.MVVM.ViewModel
             TasksVM.AddToImportantCommand = AddToImportantCommand;
             TasksVM.RemoveFromImportantCommand = RemoveFromImportantCommand;
             CurrentView = MyDayVM;
-
            
+
             MyDayCommand = new RelayCommand(o => 
             {
                 CurrentView.SelectedTask = null;
                 TaskEditVM.CloseEditWindow.Execute(o);
                 CurrentView = MyDayVM;
+                if (Settings.Default.Date.Date != DateTime.Now.Date)
+                {
+                    MyDayVM.UpdateTasks();
+                    Settings.Default.Date = DateTime.Now;
+                }
             });
+
+            MyDayCommand.Execute(this);
 
             ImportantCommand = new RelayCommand(o =>
             {
@@ -218,6 +225,7 @@ namespace Task_Manager.MVVM.ViewModel
                         TasksVM.AddTask(AddTaskButtonVM.TaskVM);
                         AddTaskButtonVM.TaskVM = new TaskViewModel();
                     }
+                    
                 }
                 else
                 {
@@ -240,6 +248,8 @@ namespace Task_Manager.MVVM.ViewModel
                     MyDayVM.RemoveTask(TaskEditVM.Task);
                 }
             });
+
+
 
         }
 

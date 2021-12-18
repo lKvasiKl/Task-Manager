@@ -46,5 +46,17 @@ namespace Task_Manager {
                 this["GridSplitter"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2021-12-19")]
+        public global::System.DateTime Date {
+            get {
+                return ((global::System.DateTime)(this["Date"]));
+            }
+            set {
+                this["Date"] = value;
+            }
+        }
     }
 }
