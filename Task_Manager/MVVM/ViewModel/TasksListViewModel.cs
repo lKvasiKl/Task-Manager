@@ -22,7 +22,7 @@ namespace Task_Manager.MVVM.ViewModel
                 _name = value;
                 if (_name == string.Empty)
                 {
-                    _name = "The list without name";
+                    CustomMassageBox.Show("The tasks list name cannot be empty!", CustomMassageBox.CMessageTitle.Info, CustomMassageBox.CMessageButton.Ok, CustomMassageBox.CMessageButton.Cancel);
                 }
                 OnPropertyChanged();
             }

@@ -25,5 +25,13 @@ namespace Task_Manager.MVVM.View
             InitializeComponent();
         }
 
+        private void taskListName_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (taskListName.Text.Length == 0)
+            {
+                CustomMassageBox.Show("The tasks list name cannot be empty!", CustomMassageBox.CMessageTitle.Info, CustomMassageBox.CMessageButton.Ok, CustomMassageBox.CMessageButton.Cancel);
+                taskListName.Text = "The list without name";
+            }
+        }
     }
 }

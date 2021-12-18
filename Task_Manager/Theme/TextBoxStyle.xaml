@@ -22,7 +22,7 @@
                                 BorderThickness="0"
                                 FontSize="17"
                                 Background="Transparent"
-                                MaxLength="330"
+                                MaxLength="300"
                                 VerticalAlignment="Top"
                                 TextWrapping="Wrap"
                                 Padding="-2"

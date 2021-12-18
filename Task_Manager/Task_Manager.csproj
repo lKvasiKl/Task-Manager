@@ -5,6 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+	  <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
 
@@ -15,6 +16,7 @@
     <None Remove="MVVM\View\Planned.png" />
     <None Remove="MVVM\View\Tasks.png" />
   </ItemGroup>
+
 
   <ItemGroup>
     <Content Include="Icon.ico" />

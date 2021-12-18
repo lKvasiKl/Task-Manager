@@ -22,6 +22,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <TextBox
+                    x:Name="taskListName"
                     Grid.Row="0"
                     Grid.Column="0"
                     Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
@@ -31,6 +32,7 @@
                     Width="Auto"
                     MaxLength="25"
                     BorderThickness="0"
+                    LostFocus="taskListName_LostFocus"
                     Background="Transparent"
                     TextElement.Foreground="{DynamicResource MaterialDesignBackground}"
                     Margin="40 20 0 0" 

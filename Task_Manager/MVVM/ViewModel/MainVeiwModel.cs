@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using Task_Manager.Core;
 
 namespace Task_Manager.MVVM.ViewModel
@@ -178,7 +179,8 @@ namespace Task_Manager.MVVM.ViewModel
             {
                 if (SelectedTasksList != null)
                 {
-                    if (MessageBox.Show("Are you sure you want to delete your to-do list?", "Remove to-do list", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                    DialogResult result = CustomMassageBox.Show("This to-do list will be permanently deleted.", CustomMassageBox.CMessageTitle.Deleting, CustomMassageBox.CMessageButton.Delete, CustomMassageBox.CMessageButton.Cancel);
+                    if (result == DialogResult.Yes)
                     {
                         TasksLists.Remove(SelectedTasksList);
                         if (TasksLists.Count > 0)
@@ -189,31 +191,39 @@ namespace Task_Manager.MVVM.ViewModel
                 }
                 else
                 {
-                    MessageBox.Show("Select the to-do list you want to delete.", "Remove to-do list");
+                    CustomMassageBox.Show("Select the to-do list you want to delete.", CustomMassageBox.CMessageTitle.Info, CustomMassageBox.CMessageButton.Ok, CustomMassageBox.CMessageButton.Cancel);
                 }
             });
 
             AddTaskToListCommand = new RelayCommand(o =>
             {
-                if (AddTaskButtonVM.TaskVM.Description != string.Empty && CurrentView != ImportantVM && CurrentView != MyDayVM)
+                if (AddTaskButtonVM.TaskVM.Description != string.Empty)
                 {
-                    (CurrentView as TasksListBaseViewModel).AddTask(AddTaskButtonVM.TaskVM);
-                    AddTaskButtonVM.TaskVM = new TaskViewModel();
-                }
-                else if (AddTaskButtonVM.TaskVM.Description != string.Empty && CurrentView == ImportantVM)
-                {
-                    AddTaskButtonVM.TaskVM.IsImportant = true;
-                    ImportantVM.AddTask(AddTaskButtonVM.TaskVM);
-                    TasksVM.AddTask(AddTaskButtonVM.TaskVM);
-                    AddTaskButtonVM.TaskVM = new TaskViewModel();
+                    if (CurrentView != ImportantVM && CurrentView != MyDayVM)
+                    {
+                        (CurrentView as TasksListBaseViewModel).AddTask(AddTaskButtonVM.TaskVM);
+                        AddTaskButtonVM.TaskVM = new TaskViewModel();
+                    }
+                    else if (CurrentView == ImportantVM)
+                    {
+                        AddTaskButtonVM.TaskVM.IsImportant = true;
+                        ImportantVM.AddTask(AddTaskButtonVM.TaskVM);
+                        TasksVM.AddTask(AddTaskButtonVM.TaskVM);
+                        AddTaskButtonVM.TaskVM = new TaskViewModel();
+                    }
+                    else
+                    {
+                        AddTaskButtonVM.TaskVM.IsMyDay = true;
+                        MyDayVM.AddTask(AddTaskButtonVM.TaskVM);
+                        TasksVM.AddTask(AddTaskButtonVM.TaskVM);
+                        AddTaskButtonVM.TaskVM = new TaskViewModel();
+                    }
                 }
                 else
                 {
-                    AddTaskButtonVM.TaskVM.IsMyDay = true;
-                    MyDayVM.AddTask(AddTaskButtonVM.TaskVM);
-                    TasksVM.AddTask(AddTaskButtonVM.TaskVM);
-                    AddTaskButtonVM.TaskVM = new TaskViewModel();
+                    CustomMassageBox.Show("The tasks description cannot be empty!", CustomMassageBox.CMessageTitle.Info, CustomMassageBox.CMessageButton.Ok, CustomMassageBox.CMessageButton.Cancel);
                 }
+                
             });
 
             TaskEditVM.AddOrRemoveMyDayCommand = new RelayCommand(o =>

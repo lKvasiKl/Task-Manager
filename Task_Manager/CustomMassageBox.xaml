@@ -1,0 +1,129 @@
+﻿<Window      x:Class="Task_Manager.CustomMassageBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Task_Manager.MVVM.View"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" 
+             d:DesignWidth="500"
+             Background="{x:Null}"
+             TextElement.Foreground="{DynamicResource MaterialDesignBackground}"
+             TextElement.FontWeight="Regular"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             FontFamily="Open Sans"
+             Title="CMessageBox" 
+             WindowStyle="None" 
+             AllowsTransparency="True"
+             WindowStartupLocation="CenterScreen"
+             Height="200"
+             Width="500"
+            >
+    <Grid>
+        <Border
+            Grid.ColumnSpan="2"
+            Grid.RowSpan="3"
+            Background="{DynamicResource MaterialDesignPaper}"
+            CornerRadius="10"
+            >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    
+                    <TextBlock
+                        Name="txtTitle"
+                        Text="Error"
+                        VerticalAlignment="Center" 
+                        Margin="50 0 0 0"
+                        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+                        FontSize="25" 
+                        FontWeight="Bold"
+                        />
+                    <Line
+                        X1="0"
+                        Y1="0"
+                        X2="500"
+                        Y2="0"
+                        Margin="10 0 10 0"
+                        VerticalAlignment="Bottom"
+                        StrokeThickness="2"
+                        Stroke="{DynamicResource MaterialDesignDivider}"
+                        />
+                        
+                    
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="70*"/>
+                    </Grid.ColumnDefinitions>
+                    <materialDesign:PackIcon 
+                        Name="msgLogo" 
+                        Kind="Error" 
+                        Grid.Column="0" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center"
+                        Width="75" 
+                        Foreground="Red"
+                        Height="75" 
+                        />
+                    <TextBlock 
+                        Name="txtMessage" 
+                        Margin="0 0 10 0"
+                        Grid.Column="1" 
+                        Text="An Error Occured in the Application" 
+                        FontSize="30" 
+                        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Stretch" 
+                        TextWrapping="Wrap"
+                        />
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width="40*"/>
+                        <ColumnDefinition Width="40*"/>
+                        <ColumnDefinition Width="20*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button 
+                        Name="btnOk" 
+                        Grid.Column="1" 
+                        Content="OK"  
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" 
+                        Width="100"  
+                        Click="BntOk_Click" 
+                        Background="#FF698EF1" 
+                        BorderBrush="{x:Null}"
+                        Height="25"
+                        materialDesign:ShadowAssist.ShadowDepth ="Depth0"
+                        />
+
+                    <Button 
+                        Name="btnCancel" 
+                        Grid.Column="2" 
+                        Content="Close"
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" 
+                        Width="100" 
+                        Click="BtnCancel_Click"  
+                        Background="#FFE60000" 
+                        BorderBrush="{x:Null}"
+                        Height="25" 
+                        materialDesign:ShadowAssist.ShadowDepth ="Depth0" Cursor="Hand"
+                        />     
+
+                </Grid>
+            </Grid>
+        </Border>
+
+
+    </Grid>
+</Window>

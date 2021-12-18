@@ -63,6 +63,7 @@
                                         HorizontalAlignment="Stretch"
                                         VerticalAlignment="Center"
                                         Margin="50 0 85 5"
+                                        MaxLength="300"
                                         Initialized="TextBox_Initialized"
                                         LostFocus="AddTaskTextBox_LostFocus"
                                         KeyDown="Enter_KeyDown"
