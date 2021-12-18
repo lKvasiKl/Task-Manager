@@ -1,28 +1,31 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using Task_Manager.Core;
+using Task_Manager.MVVM.Model;
 
 namespace Task_Manager.MVVM.ViewModel
 {
     public class TasksListViewModel : TasksListBaseViewModel
     {
-        private string _name;
-
         private bool _needInitFocus;
 
         public string Name 
         { 
             get 
             { 
-                return _name; 
+                return _taskList.Name; 
             }
 
             set
             {
-                _name = value;
-                if (_name == string.Empty)
+                
+                if (value == string.Empty)
                 {
                     CustomMassageBox.Show("The tasks list name cannot be empty!", CustomMassageBox.CMessageTitle.Info, CustomMassageBox.CMessageButton.Ok, CustomMassageBox.CMessageButton.Cancel);
+                }
+                else
+                {
+                    _taskList.Name = value;
                 }
                 OnPropertyChanged();
             }
@@ -52,6 +55,11 @@ namespace Task_Manager.MVVM.ViewModel
             NeedInitFocus = needInitFocus;
         }
 
-        
+        public TasksListViewModel(TaskList taskList) : base(taskList)
+        {
+            NeedInitFocus = false; ;
+        }
+
+
     }
 }

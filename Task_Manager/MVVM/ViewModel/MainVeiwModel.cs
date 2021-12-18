@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using Task_Manager.Core;
+using Task_Manager.MVVM.Model;
 
 namespace Task_Manager.MVVM.ViewModel
 {
@@ -102,33 +104,11 @@ namespace Task_Manager.MVVM.ViewModel
             TaskEditVM.PropertyChanged += Deselect;
             AddTaskButtonVM = new AddTaskButtonViewModel();
             TasksLists = new ObservableCollection<TasksListViewModel>();
-            TasksLists.Add(new TasksListViewModel(false));
-            TasksLists.Add(new TasksListViewModel(false));
-            TasksLists[0].Name = "Products";
-            TasksLists[0].PropertyChanged += SelectionChanged;
-            TasksLists[1].Name = "Homework";
-            TasksLists[1].PropertyChanged += SelectionChanged;
-            MyDayVM = new MyDayViewModel();
-            MyDayVM.PropertyChanged += SelectionChanged;
-            MyDayVM.AddToImportantCommand = AddToImportantCommand;
-            MyDayVM.RemoveFromImportantCommand = RemoveFromImportantCommand;
-            ImportantVM = new ImportantViewModel();
-            ImportantVM.PropertyChanged += SelectionChanged;
-            ImportantVM.AddToImportantCommand = AddToImportantCommand;
-            ImportantVM.RemoveFromImportantCommand = RemoveFromImportantCommand;
-            PlannedVM = new PlannedViewModel();
-            PlannedVM.PropertyChanged += SelectionChanged;
-            PlannedVM.AddToImportantCommand = AddToImportantCommand;
-            PlannedVM.RemoveFromImportantCommand = RemoveFromImportantCommand;
-            TasksVM = new TasksViewModel();
-            TasksVM.PropertyChanged += SelectionChanged;
-            TasksVM.AddToImportantCommand = AddToImportantCommand;
-            TasksVM.RemoveFromImportantCommand = RemoveFromImportantCommand;
-            CurrentView = MyDayVM;
-           
+            Loading();
 
             MyDayCommand = new RelayCommand(o => 
             {
+                MyDayVM.Update();
                 CurrentView.SelectedTask = null;
                 TaskEditVM.CloseEditWindow.Execute(o);
                 CurrentView = MyDayVM;
@@ -143,6 +123,7 @@ namespace Task_Manager.MVVM.ViewModel
 
             ImportantCommand = new RelayCommand(o =>
             {
+                ImportantVM.Update();
                 CurrentView.SelectedTask = null;
                 TaskEditVM.CloseEditWindow.Execute(o);
                 CurrentView = ImportantVM;
@@ -150,6 +131,7 @@ namespace Task_Manager.MVVM.ViewModel
 
             PlannedCommand = new RelayCommand(o =>
             {
+                PlannedVM.Update();
                 CurrentView.SelectedTask = null;
                 TaskEditVM.CloseEditWindow.Execute(o);
                 CurrentView = PlannedVM;
@@ -157,6 +139,7 @@ namespace Task_Manager.MVVM.ViewModel
 
             TasksCommand = new RelayCommand(o =>
             {
+                TasksVM.Update();
                 CurrentView.SelectedTask = null;
                 TaskEditVM.CloseEditWindow.Execute(o);
                 CurrentView = TasksVM;
@@ -168,6 +151,7 @@ namespace Task_Manager.MVVM.ViewModel
                 TaskEditVM.CloseEditWindow.Execute(o);
                 if (SelectedTasksList != null)
                 {
+                    SelectedTasksList.Update();
                     CurrentView = SelectedTasksList;
                 }
             });
@@ -178,6 +162,7 @@ namespace Task_Manager.MVVM.ViewModel
                 tasksList.PropertyChanged += SelectionChanged;
                 tasksList.AddToImportantCommand = AddToImportantCommand;
                 tasksList.RemoveFromImportantCommand = RemoveFromImportantCommand;
+                DataBase.TasksLists.Add(tasksList.List);
                 TasksLists.Add(tasksList);
                 SelectedTasksList = tasksList;
             });
@@ -274,7 +259,9 @@ namespace Task_Manager.MVVM.ViewModel
                         {
                             if (CurrentView is TasksListBaseViewModel viewModel1)
                             {
+                                Task task = viewModel1.SelectedTask.Task;
                                 viewModel1.RemoveTask(viewModel1.SelectedTask);
+                                DataBase.RemoveTask(task);
                             }
 
                             break;
@@ -299,6 +286,37 @@ namespace Task_Manager.MVVM.ViewModel
                        
                 }
             }
+        }
+
+        public void Loading()
+        {
+            List<TasksListBaseViewModel> lists = new();
+            MyDayVM = new MyDayViewModel(DataBase.TasksLists[0]);
+            ImportantVM = new ImportantViewModel(DataBase.TasksLists[1]);
+            PlannedVM = new PlannedViewModel(DataBase.TasksLists[2]);
+            TasksVM = new TasksViewModel(DataBase.TasksLists[3]);
+            MyDayVM.PropertyChanged += SelectionChanged;
+            MyDayVM.AddToImportantCommand = AddToImportantCommand;
+            MyDayVM.RemoveFromImportantCommand = RemoveFromImportantCommand;
+            ImportantVM.PropertyChanged += SelectionChanged;
+            ImportantVM.AddToImportantCommand = AddToImportantCommand;
+            ImportantVM.RemoveFromImportantCommand = RemoveFromImportantCommand;
+            PlannedVM.PropertyChanged += SelectionChanged;
+            PlannedVM.AddToImportantCommand = AddToImportantCommand;
+            PlannedVM.RemoveFromImportantCommand = RemoveFromImportantCommand;
+            TasksVM.PropertyChanged += SelectionChanged;
+            TasksVM.AddToImportantCommand = AddToImportantCommand;
+            TasksVM.RemoveFromImportantCommand = RemoveFromImportantCommand;
+            CurrentView = MyDayVM;
+            for (int i = 4; i < DataBase.TasksLists.Count; i++)
+            { 
+                TasksListViewModel list =  new TasksListViewModel(DataBase.TasksLists[i]);
+                list.PropertyChanged += SelectionChanged;
+                list.AddToImportantCommand = AddToImportantCommand;
+                list.RemoveFromImportantCommand = RemoveFromImportantCommand;
+                TasksLists.Add(list);
+            }
+
         }
     }
 }

@@ -11,6 +11,11 @@ namespace Task_Manager.MVVM.ViewModel
     {
         private Task _task;
 
+        public Task Task
+        {
+            get { return _task; }
+        }
+
         public RelayCommand DeselectDateCommand { get; set; }
 
         public string Description
@@ -37,6 +42,34 @@ namespace Task_Manager.MVVM.ViewModel
             set
             {
                 _task.IsDone = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsTask
+        {
+            get
+            {
+                return _task.IsTask;
+            }
+
+            set
+            {
+                _task.IsTask = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsPlanned
+        {
+            get
+            {
+                return _task.IsPlanned;
+            }
+
+            set
+            {
+                _task.IsPlanned = value;
                 OnPropertyChanged();
             }
         }
@@ -137,6 +170,11 @@ namespace Task_Manager.MVVM.ViewModel
                 Time = null;
             });
 
+        }
+
+        public TaskViewModel(Task task) : this()
+        {
+            _task = task;
         }
 
         public override bool Equals(object? obj)

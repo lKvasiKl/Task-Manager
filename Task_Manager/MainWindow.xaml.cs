@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MaterialDesignThemes.Wpf;
+using Task_Manager.Core;
 using Task_Manager.MVVM.ViewModel;
 
 namespace Task_Manager
@@ -75,6 +76,7 @@ namespace Task_Manager
 
             Settings.Default.GridSplitter = Spliter.ActualWidth;
             Settings.Default.Save();
+            DataBase.Serialize();
             Application.Current.MainWindow.Close();
         }
 

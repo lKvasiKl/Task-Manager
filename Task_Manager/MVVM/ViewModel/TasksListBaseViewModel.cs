@@ -3,18 +3,24 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using Task_Manager.Core;
+using Task_Manager.MVVM.Model;
 
 namespace Task_Manager.MVVM.ViewModel
 {
     public class TasksListBaseViewModel : ObservableObject
     {
+        protected TaskList _taskList;
         private bool _needShowPicture = true;
         private bool _needShowBorder = false;
         private TaskViewModel? _selectedTask;
         private string _searchFilter;
+
+        public TaskList List
+        {
+            get { return _taskList; }
+        }
 
         public ObservableCollection<TaskViewModel> Tasks { get; set; }
 
@@ -94,7 +100,7 @@ namespace Task_Manager.MVVM.ViewModel
 
         public TasksListBaseViewModel()
         {
-            
+            _taskList = new TaskList();
             Tasks = new ObservableCollection<TaskViewModel>();
             DoneTasks = new ObservableCollection<TaskViewModel>();
             Tasks.CollectionChanged += TasksCollectionChanged;
@@ -111,6 +117,22 @@ namespace Task_Manager.MVVM.ViewModel
             };
 
             SearchFilter = string.Empty;
+        }
+
+        public TasksListBaseViewModel(TaskList taskList) : this()
+        {
+            _taskList = taskList;
+            Update();
+        }
+
+        public void Update()
+        {
+            Tasks.Clear();
+            DoneTasks.Clear();
+            foreach (Task task in _taskList.Tasks)
+            {
+                AddTask(new TaskViewModel(task));
+            }
         }
 
         private void AddFilter()
@@ -146,7 +168,6 @@ namespace Task_Manager.MVVM.ViewModel
                     }
                 }
             };
-            
         }
 
         private void Sort(ObservableCollection<TaskViewModel> Tasks)
@@ -197,12 +218,20 @@ namespace Task_Manager.MVVM.ViewModel
             {
                 Tasks.Add(task);
             }
+
+            _taskList.AddTask(task.Task);
         }
 
         public void RemoveTask(TaskViewModel task)
         {
             DoneTasks.Remove(task);
             Tasks.Remove(task);
+            _taskList.RemoveTask(task.Task);
+            if (this is not ImportantViewModel
+                and not MyDayViewModel)
+            {
+                DataBase.RemoveTask(task.Task);
+            }
         }
 
         private void ImportenceChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)

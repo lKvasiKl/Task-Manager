@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Task_Manager.MVVM.Model
 {
+    [Serializable]
     public class Task
     {
         public string Description { get; set; } = string.Empty;
@@ -15,6 +16,10 @@ namespace Task_Manager.MVVM.Model
         public bool IsImportant { get; set; } = false;
 
         public bool IsMyDay { get; set; } = false;
+
+        public bool IsPlanned { get; set; } = false;
+
+        public bool IsTask { get; set; } = false;
 
         public DateTime? Date { get; set; } = new DateTime();
 
@@ -26,6 +31,26 @@ namespace Task_Manager.MVVM.Model
 
         public Task()
         {
+
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if(obj is Task task)
+            {
+                if (Description == task.Description &&
+                    IsDone == task.IsDone
+                    && IsImportant == task.IsImportant
+                    && IsMyDay == task.IsMyDay
+                    && IsPlanned == task.IsPlanned
+                    && IsTask == task.IsTask
+                    && TheNote == task.TheNote)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
