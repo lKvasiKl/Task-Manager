@@ -259,9 +259,14 @@ namespace Task_Manager.MVVM.ViewModel
                         {
                             if (CurrentView is TasksListBaseViewModel viewModel1)
                             {
-                                Task task = viewModel1.SelectedTask.Task;
-                                viewModel1.RemoveTask(viewModel1.SelectedTask);
-                                DataBase.RemoveTask(task);
+                                DialogResult result = CustomMassageBox.Show("This task will be permanently deleted.", CustomMassageBox.CMessageTitle.Deleting, CustomMassageBox.CMessageButton.Delete, CustomMassageBox.CMessageButton.Cancel);
+                                if (result == DialogResult.Yes)
+                                {
+                                    Task task = viewModel1.SelectedTask.Task;
+                                    viewModel1.RemoveTask(viewModel1.SelectedTask);
+                                    DataBase.RemoveTask(task);
+                                }
+                                
                             }
 
                             break;
